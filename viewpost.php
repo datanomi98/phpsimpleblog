@@ -62,11 +62,12 @@ if(isset($_SESSION['user'])){
 if(isset($_POST['submit-comment'])){
     try{
 //had to use prepare statement to prevent sql injection
-$stmt = $link->prepare("INSERT INTO blog_comments (postID, nickname, comment) VALUES (?,?,?)");
-$stmt->bind_param("iss", $postID, $nickname, $comment);
+$stmt = $link->prepare("INSERT INTO blog_comments (postID, nickname, comment, userID) VALUES (?,?,?,?)");
+$stmt->bind_param("issi", $postID, $nickname, $comment, $userID);
 $postID = $_GET['id'];
 $nickname = $_SESSION['user'];
 $comment = urlencode($_POST['comment']);
+$userID = $_SESSION['userID'];
  $stmt->execute() or die (mysqli_error($link));   
 $stmt->close();
 header('Location: viewpost.php?id='.$postid);
@@ -88,12 +89,12 @@ $query = "SELECT nickname, comment, commentDate, postID FROM blog_comments  WHER
      while ($row = mysqli_fetch_row($result)) {
          //make links clickable
          $string = urldecode($row[1]);
-              
-         echo '<div>';
-                echo '<h2>'.$row[0].'</h2>';
-                echo '<p>Posted on '.date('jS M Y H:i:s', strtotime($row[2])).'</p>';
-                echo '<p class ="break" >'.$string.'</p>';                      
-            echo '</div>';
+      echo '<div>';
+    echo '<h2>'.$row[0].'</h2>';
+    echo '<p>Posted on '.date('jS M Y H:i:s', strtotime($row[2])).'</p>';
+    echo '<p class ="break" >'.$string.'</p>';                      
+    echo '</div>';
+      
     }
    
 ?>

@@ -26,7 +26,6 @@
 </html>
 
 <?php
-
 ini_set('display_errors', 1);
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
@@ -37,6 +36,7 @@ try{
 $nickname = $_POST['nickname'];
 $email = $_POST ['email'];
 $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+echo $_SERVER['REMOTE_ADDR'];
 $query = "SELECT * FROM blog_users WHERE nickname = '$nickname'";
 $nickQuery = mysqli_query($link,$query);
 $data = mysqli_fetch_row($nickQuery);
@@ -51,7 +51,7 @@ if($data[3] == $email) {
     header('Location: register-user.php?error=email');
 
 }else{
-$stmt = $link->prepare("INSERT INTO blog_users (nickname, password, email) VALUES (?,?,?)");
+$stmt = $link->prepare("INSERT INTO blog_users (nickname, password, email, ipAddress) VALUES (?,?,?)");
 $stmt->bind_param("sss", $nickname, $password, $email);
 $stmt->execute();
 $stmt->close();

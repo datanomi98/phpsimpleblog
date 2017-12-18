@@ -30,8 +30,8 @@ try{
         
          echo '<div>';
                 echo '<h1><a href="viewpost.php?id='.$row[0].'">'.$row[1].'</a></h1>';
-                echo '<p>Posted on '.date('jS M Y H:i:s', strtotime($row[3])).'</p>';
-                           //call function to cut piece of text to the desc part.               
+                echo '<p>Posted on '.date('jS M Y H:i:s', strtotime($row[2])).'</p>';
+                           //call function to cut piece of postcontent to the desc part.               
                 echo '<p>'.cutTextForDesc($row[3]).'</p>';                
                 echo '<p><a href="viewpost.php?id='.$row[0].'">Read More</a></p>';                
             echo '</div>';
