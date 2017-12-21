@@ -35,7 +35,6 @@ try{
 
      while ($row = mysqli_fetch_row($result)) {
            $cont = urldecode($row[3]);
-  
          echo '<div>';
                 echo "<br></br>";
                 echo $row[1];

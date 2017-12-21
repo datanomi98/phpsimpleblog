@@ -9,10 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-   
 
 
-   
+
+
 
     <!-- Custom styles for this template -->
     <link href="style/menustyle.css" rel="stylesheet">
@@ -39,18 +39,18 @@
             </li>
            <?php
             if(!isset ($_SESSION['user'])){
-                
-            
+
+
             echo "<li class='nav-item'>";
             echo " <a class='nav-link' href='register-user.php'>Register</a>";
             echo " </li>";
         }
 
-            ?>           
+            ?>
           <?php
             if(!isset ($_SESSION['user'])){
-                
-            
+
+
             echo "<li class='nav-item'>";
             echo " <a class='nav-link' href='login.php'>Login</a>";
             echo " </li>";
@@ -61,25 +61,27 @@
               <a class="nav-link" href="#">Contact</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"> <?php if(isset($_SESSION['user'])){echo  $_SESSION['user'];}?></a>
+              <a class="nav-link" href="view-account.php?id=<?php echo  $_SESSION['userID']?>"> <?php if(isset($_SESSION['user'])){
+                  echo $_SESSION['user'];
+              }?></a>
             </li>
             <?php
             if(isset ($_SESSION['user'])){
-                
-            
+
+
             echo "<li class='nav-item'>";
             echo " <a class='nav-link' href='logout.php'>Logout</a>";
             echo " </li>";
         }
 
             ?>
-            
-           
+
+
           </ul>
-         
+
         </div>
       </div>
-      
+
     </nav>
 
     <!-- Page Content -->

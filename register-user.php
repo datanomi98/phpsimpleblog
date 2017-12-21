@@ -1,7 +1,7 @@
     <html>
      <body>
    <link rel="stylesheet" href="style/registerpage.css">
-    
+
     <div id="wrapper">
 
   <h1>Create a New Account</h1>
@@ -17,7 +17,7 @@
          <td>Password :</td> <td><input type="password" name="password"></td><br>
         </tr>
         <tr>
-        
+
         <tr>
          <td><input type="submit" value="Submit" name = "submit-register"></td>
         </tr>
@@ -30,13 +30,14 @@ ini_set('display_errors', 1);
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
 include 'include/config.php';
+//for debugging only
+//echo $_SERVER['REMOTE_ADDR'];
 if(isset($_POST['submit-register'])){
 try{
-
 $nickname = $_POST['nickname'];
 $email = $_POST ['email'];
 $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-echo $_SERVER['REMOTE_ADDR'];
+$ipAddress = "127.0.0.1";
 $query = "SELECT * FROM blog_users WHERE nickname = '$nickname'";
 $nickQuery = mysqli_query($link,$query);
 $data = mysqli_fetch_row($nickQuery);
@@ -51,8 +52,8 @@ if($data[3] == $email) {
     header('Location: register-user.php?error=email');
 
 }else{
-$stmt = $link->prepare("INSERT INTO blog_users (nickname, password, email, ipAddress) VALUES (?,?,?)");
-$stmt->bind_param("sss", $nickname, $password, $email);
+$stmt = $link->prepare("INSERT INTO blog_users (nickname, password, email, ipAddress) VALUES (?,?,?,?)");
+$stmt->bind_param("ssss", $nickname, $password, $email, $ipAddress);
 $stmt->execute();
 $stmt->close();
 header('Location: index.php?userreg=succ');

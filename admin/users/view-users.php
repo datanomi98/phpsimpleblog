@@ -17,12 +17,12 @@ include 'menu.php';
 if(isset($_SESSION['loggedin'])){
 $query = "SELECT userID, nickname, email FROM blog_users";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
-//fetch all results from db
 echo "<br>";
 echo "<br>";
 print('<td><b>userID</b></td>');
 print('<td><b>Nickname</b></td>');
 print('<td><b>EmailAddress</b></td>');
+//fetch all results from the db
  while ($row = mysqli_fetch_row($result)) {
 print('<tr><td>');
 echo $row[0];
@@ -31,11 +31,11 @@ echo $row[1]."  ". '<a href="delete-user.php?id='.$row[0].'">'.'Delete user</a>'
 print('</td><td>');
 echo $row[2];
 print('</td></tr>');
-print ("\n"); 
+print ("\n");
     }
 }else{
-	//if u are trying to access the site without loggin in it will redirect you to the login site with parameter 
-	//of the site url
+	//if u are trying to access the site without loggin in it will redirect you to the login site with parameter
+	//of the site url to automatically get back to this site when u are logged in.
 	header('Location: ../login.php?site='. $_SERVER['PHP_SELF']);
 }
 ?>

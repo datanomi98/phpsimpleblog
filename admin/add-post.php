@@ -32,14 +32,13 @@ try{
 if(isset($_POST['submit'])){
    // $_POST = array_map( 'stripslashes', $_POST );
     //extract($_POST);
-   
     $postitle = $_POST['postTitle'];
-   // $postdesc = $_POST['postDesc'];
     $postCont = urlencode($_POST['postCont']);
-    $query =  'INSERT into blog_posts (postTitle, postCont) values(' .
-"\"{$postitle}\", " .
-"\"{$postCont}\");";
-     $result = mysqli_query($link, $query) or die (mysqli_error($link));
+   //we have to use prepare statement to prevent sql injection.
+    $stmt = $link->prepare("INSERT into blog_posts (postTitle, postCont) values (?,?)");
+    $stmt->bind_param("ss", $postitle, $postCont);
+    $stmt->execute() or die (mysqli_error($link));
+    $stmt->close();
      header('Location: index.php?action=added');
 }
 }catch(Expection $e){

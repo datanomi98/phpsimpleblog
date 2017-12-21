@@ -1,7 +1,7 @@
 <html>
  <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/normalize.css">
-      
+
     <div id = "background-img">
     <div id="wrapper">
 <?php
@@ -14,18 +14,18 @@ include 'include/config.php';
 include 'menu.php';
 
 try{
-    
+
     if(isset($_GET['id'])){
         $postid = $_GET["id"];
     $query = "SELECT postID, postTitle, postCont, postDate FROM blog_posts WHERE postID = $postid";
     $result = mysqli_query($link, $query) or die (mysqli_error($link));
-    
+
      while ($row = mysqli_fetch_row($result)) {
          echo '<div>';
                 echo '<h1>'.$row[1].'</h1>';
                 echo '<p>Posted on '.date('jS M Y H:i:s', strtotime($row[3])).'</p>';
-                echo '<p>'.urldecode($row[2]).'</p>';                
-                             
+                echo '<p>'.urldecode($row[2]).'</p>';
+
             echo '</div>';
     }
 
@@ -34,7 +34,7 @@ try{
 }
 
 }catch(Expection $e){
-    
+
     }
 ?>
 
@@ -42,12 +42,12 @@ try{
 
 
 		<h1>Comments</h1>
-		
+
 		<form action='' method='post'>
 <?php
 //check if user is logged in
 if(isset($_SESSION['user'])){
-  echo "<br /><label>Nickname</label>"; 
+  echo "<br /><label>Nickname</label>";
   echo "<br />".$_SESSION['user']."<br />";
   echo "<br /><label>Comment</label><br />";
   echo "<textarea name='comment' cols='60' rows='10'></textarea>";
@@ -73,7 +73,7 @@ $stmt->close();
 header('Location: viewpost.php?id='.$postid);
 
 }catch(Expection $e){
-    
+
 }
 
 }
@@ -92,11 +92,11 @@ $query = "SELECT nickname, comment, commentDate, postID FROM blog_comments  WHER
       echo '<div>';
     echo '<h2>'.$row[0].'</h2>';
     echo '<p>Posted on '.date('jS M Y H:i:s', strtotime($row[2])).'</p>';
-    echo '<p class ="break" >'.$string.'</p>';                      
+    echo '<p class ="break" >'.$string.'</p>';
     echo '</div>';
-      
+
     }
-   
+
 ?>
 </div>
 </div>

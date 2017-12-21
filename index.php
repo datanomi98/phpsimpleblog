@@ -1,5 +1,3 @@
-
-
 <html>
 <body>
     <link rel="stylesheet" href="style/main.css">
@@ -20,23 +18,21 @@ include 'include/config.php';
 
 include 'menu.php';
 try{
-    //start mysql with sudo /etc/init.d/mysql start 
-    //use this for comment section
-    //$postid = 1; and WHERE postID = $postid
+    //start mysql with sudo /etc/init.d/mysql start
     $query = "SELECT postID, postTitle, postDate, postCont FROM blog_posts ORDER BY postID DESC ";
     $result = mysqli_query($link, $query) or die (mysqli_error($link));
 
      while ($row = mysqli_fetch_array($result)) {
-        
+
          echo '<div>';
                 echo '<h1><a href="viewpost.php?id='.$row[0].'">'.$row[1].'</a></h1>';
                 echo '<p>Posted on '.date('jS M Y H:i:s', strtotime($row[2])).'</p>';
-                           //call function to cut piece of postcontent to the desc part.               
-                echo '<p>'.cutTextForDesc($row[3]).'</p>';                
-                echo '<p><a href="viewpost.php?id='.$row[0].'">Read More</a></p>';                
+                           //call function to cut piece of postcontent to the desc part.
+                echo '<p>'.cutTextForDesc($row[3]).'</p>';
+                echo '<p><a href="viewpost.php?id='.$row[0].'">Read More</a></p>';
             echo '</div>';
     }
-    
+
 
 
 }

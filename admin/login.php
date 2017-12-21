@@ -33,10 +33,10 @@ if(isset($_POST['username']) && isset($_POST['password'])){
     echo "\n";
     echo $password;
     //check if username or password match
-    if($username =="username" && $password == "username"){
+    if($username =="root" && $password == "kek"){
         $_SESSION['loggedin'] = "true";
-        $_SESSION['useradmin'] = "root";
-        header('Location: index.php');
+        $_SESSION['adminuser'] = "root";
+        header('Location: '.$_GET['site']);
     }else{
         header('Location: login.php?error=1');
     }
