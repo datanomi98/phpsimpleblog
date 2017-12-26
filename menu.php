@@ -25,7 +25,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
         <a class="navbar-brand" href="#">
-          <!--<img src="http://placehold.it/300x60?text=Logo" width="150" height="30" alt=""> -->
+
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -61,7 +61,7 @@
               <a class="nav-link" href="#">Contact</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="view-account.php?id=<?php echo  $_SESSION['userID']?>"> <?php if(isset($_SESSION['user'])){
+              <a class="nav-link" href="view-account.php?id=<?php if(isset($_SESSION['userID'])){echo  $_SESSION['userID'];}?>"> <?php if(isset($_SESSION['user'])){
                   echo $_SESSION['user'];
               }?></a>
             </li>

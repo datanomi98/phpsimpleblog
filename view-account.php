@@ -13,9 +13,12 @@ include 'menu.php';
 <div id="wrapper">
 
 		<h1>User: <?php echo $_SESSION['user'];?></h1>
-
-
-<?php
-
-
- ?>
+      <?php
+      $stmt = $link ->prepare("SELECT userID, nickname, email, password FROM blog_users WHERE userID = ?");
+      $stmt->bind_param("s", $_SESSION['userID']);
+      $stmt->execute();
+       $stmt->bind_result($userID,$nick, $emailDB, $pass);
+       while ($stmt->fetch()) {
+         echo "email: ". $emailDB;
+       }
+       ?>

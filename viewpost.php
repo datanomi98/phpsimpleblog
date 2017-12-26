@@ -16,16 +16,24 @@ include 'menu.php';
 try{
 
     if(isset($_GET['id'])){
-        $postid = $_GET["id"];
-    $query = "SELECT postID, postTitle, postCont, postDate FROM blog_posts WHERE postID = $postid";
-    $result = mysqli_query($link, $query) or die (mysqli_error($link));
+    $postid = htmlspecialchars($_GET["id"]);
+    $stmt = $link->prepare("SELECT postID, postTitle, postCont, postDate FROM blog_posts WHERE postID = ?");
+    $stmt->bind_param("i", $postid);
+    $stmt->execute();
+    $stmt->bind_result($postID,$postTitle, $postCont, $postDate);
+     while ($stmt->fetch()) {
 
-     while ($row = mysqli_fetch_row($result)) {
+
          echo '<div>';
-                echo '<h1>'.$row[1].'</h1>';
-                echo '<p>Posted on '.date('jS M Y H:i:s', strtotime($row[3])).'</p>';
-                echo '<p>'.urldecode($row[2]).'</p>';
-
+                echo '<h1>';
+                printf("%s", $postTitle);
+                echo "</h1>";
+                echo '<p>Posted on ';
+                printf("%s", date('jS M Y H:i:s', strtotime($postDate)));
+                echo "</p>";
+                echo '<p>';
+                printf("%s", urldecode(htmlspecialchars($postCont)));
+                echo "</p>";
             echo '</div>';
     }
 
@@ -64,11 +72,11 @@ if(isset($_POST['submit-comment'])){
 //had to use prepare statement to prevent sql injection
 $stmt = $link->prepare("INSERT INTO blog_comments (postID, nickname, comment, userID) VALUES (?,?,?,?)");
 $stmt->bind_param("issi", $postID, $nickname, $comment, $userID);
-$postID = $_GET['id'];
+$postID = htmlspecialchars($_GET['id']);
 $nickname = $_SESSION['user'];
 $comment = urlencode($_POST['comment']);
 $userID = $_SESSION['userID'];
- $stmt->execute() or die (mysqli_error($link));   
+ $stmt->execute() or die (mysqli_error($link));
 $stmt->close();
 header('Location: viewpost.php?id='.$postid);
 
@@ -82,13 +90,14 @@ header('Location: viewpost.php?id='.$postid);
 
 <?php
 
-$postid = $_GET['id'];
+$postid = htmlspecialchars($_GET['id']);
 $query = "SELECT nickname, comment, commentDate, postID FROM blog_comments  WHERE postID = $postid  ORDER BY commentDate DESC ";
     $result = mysqli_query($link, $query) or die (mysqli_error($link));
 
      while ($row = mysqli_fetch_row($result)) {
          //make links clickable
-         $string = urldecode($row[1]);
+         //use htmlspecialchars to prevent xss attack
+         $string = urldecode(htmlspecialchars($row[1]));
       echo '<div>';
     echo '<h2>'.$row[0].'</h2>';
     echo '<p>Posted on '.date('jS M Y H:i:s', strtotime($row[2])).'</p>';
